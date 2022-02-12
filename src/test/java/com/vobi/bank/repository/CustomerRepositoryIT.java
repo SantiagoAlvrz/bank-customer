@@ -2,6 +2,8 @@ package com.vobi.bank.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,7 @@ class CustomerRepositoryIT {
 	DocumentTypeRepository documentTypeRepository;
 	
 	@Test
+	@Order(1)
 	void debeValidarDependencias() {
 		assertNotNull(customerRepository);
 		assertNotNull(documentTypeRepository);	
@@ -30,6 +33,7 @@ class CustomerRepositoryIT {
 	
 	
 	@Test
+	@Order(2)
 	 void debeCrearUnCustomer() {
 		 //Arrange
 		 Integer idDocumentType=1;
@@ -73,6 +77,28 @@ class CustomerRepositoryIT {
 		//Assert
 		assertNotNull(customer,"El customer es nulo no se pudo modificar");
 	}
+	
+	
+	@Test
+	@Order(4)
+	void debeBorrarUnCustomer() {
+		//Arrange
+
+		Integer idCustomer=14836554;
+		Customer customer=null;
+		Optional<Customer> customerOptional=null;
+
+		assertTrue(customerRepository.findById(idCustomer).isPresent(),"No encontro el customer");
+		customer=customerRepository.findById(idCustomer).get();
+
+		//Act
+		customerRepository.delete(customer);
+		customerOptional=customerRepository.findById(idCustomer);
+
+		//Assert
+		assertFalse(customerOptional.isPresent(),"No pudo borrar el customer");
+	}
+	
 	
 }
 	 
