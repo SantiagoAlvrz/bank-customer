@@ -50,16 +50,26 @@ public class CustomerServiceImpl implements CustomerService {
 		validate(entity);
 
 		if(customerRepository.existsById(entity.getCustId())) {
-			throw new Exception("El cliente ya existe");
+			throw new Exception("El customer ya existe");
 		}
 
 		return customerRepository.save(entity);
 	}
 	
 	@Override
+	@Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
 	public Customer update(Customer entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(entity==null) {
+			throw new Exception("El customer es nulo");
+		}
+
+		validate(entity);
+
+		if(customerRepository.existsById(entity.getCustId())==false) {
+			throw new Exception("El customer no existe");
+		}
+
+		return customerRepository.save(entity);
 	}
 
 	@Override
