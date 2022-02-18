@@ -87,7 +87,7 @@ class CustomerServiceIT {
 	}
 
 	@Test
-	@Order(4)
+	@Order(5)
 	void debeBorrarUnCustomer()throws Exception  {
 		//Arrange
 
@@ -109,7 +109,7 @@ class CustomerServiceIT {
 	}
 
 	@Test
-	@Order(5)
+	@Order(4)
 	void debeConsultarTodosLosCustomers()throws Exception  {
 		//Arrange
 		List<Customer> customers=null;
